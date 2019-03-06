@@ -67,12 +67,17 @@ class Episode:
         action_was_successful = self.environment.last_action_success
 
         if action['action'] == 'Done':
-            done = True
+            #done = True
             objects = self._env.last_event.metadata['objects']
             visible_objects = [o['objectType'] for o in objects if o['visible']]
-            if self.target in visible_objects:
+            if not self.success1 and self.target1 in visible_objects:
                 reward += GOAL_SUCCESS_REWARD
-                self.success = True
+                self.success1 = True
+            if not self.success2 and self.target2 in visible_objects:
+                reward += GOAL_SUCCESS_REWARD
+                self.success2 = True
+            
+            done = self.success1 and self.success2
 
         return reward, done, action_was_successful
 
@@ -95,8 +100,10 @@ class Episode:
             self._env.reset(scene)
 
         # For now, single target.
-        self.target = 'Tomato'
-        self.success = False
+        self.target1 = 'Tomato'
+        self.target2 = 'Bowl'
+        self.success1 = False
+        self.success2 = False
         self.cur_scene = scene
         self.actions_taken = []
         

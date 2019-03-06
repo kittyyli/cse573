@@ -123,7 +123,7 @@ class A3CAgent:
         self._increment_episode_length()
 
         # populate the success
-        self.success = self.episode.success
+        self.success = self.episode.success1 and self.episode.success2
 
         return model_output.value, prob, action
 
