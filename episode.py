@@ -71,12 +71,15 @@ class Episode:
             objects = self._env.last_event.metadata['objects']
             visible_objects = [o['objectType'] for o in objects if o['visible']]
             if not self.success1 and self.target1 in visible_objects:
-                reward += GOAL_SUCCESS_REWARD
+                #reward += GOAL_SUCCESS_REWARD
                 self.success1 = True
             if not self.success2 and self.target2 in visible_objects:
-                reward += GOAL_SUCCESS_REWARD
+                #reward += GOAL_SUCCESS_REWARD
                 self.success2 = True
             
+            if self.success1 and self.success2:
+                reward += GOAL_SUCCESS_REWARD
+
             done = self.success1 and self.success2
 
         return reward, done, action_was_successful
