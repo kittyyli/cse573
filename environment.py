@@ -128,7 +128,24 @@ class Environment:
         self.controller.step(dict(action='Teleport', x=x, y=y, z=z))
         self.controller.step(dict(action='Rotate', rotation=rotation))
         self.controller.step(dict(action="Look", horizon=horizon))
+        
+    def pickup_object(self, obj_id):
+        event = self.controller.step(dict(action='PickupObject', objectId=obj_id), raise_for_failure=True)
+        
+    def put_in_receptacle(self, t1_id, t2_id):
+        event = self.controller.step(dict(action='OpenObject', objectId=t2_id), raise_for_failure=True)
+        event = controller.step(dict(action='MoveRight'), raise_for_failure=True)
+        event = controller.step(dict(
+                            action='PutObject',
+                            receptacleObjectId=t2_id,
+                            objectId=t1_id), raise_for_failure=True)
 
+        # close the microwave
+        event = controller.step(dict(
+            action='CloseObject',
+            objectId=t2_id), raise_for_failure=True)
+        
+        
     def random_reachable_state(self):
         """ Get a random reachable state. """
         xyz = random.choice(self.reachable_points)
