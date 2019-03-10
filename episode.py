@@ -81,7 +81,7 @@ class Episode:
                         self.success1 = True
                         
                     except Exception:
-                        
+                        print('Pickup err')
                     
                 if self.success1 and not self.success2 and o['visible'] and o['openable'] and o['objectType'] == self.target2:
                     
