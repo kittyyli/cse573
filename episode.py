@@ -80,8 +80,8 @@ class Episode:
                         reward += GOAL_SUCCESS_REWARD
                         self.success1 = True
                         
-                    catch Exception:
-                        print('Something went wrong with picking up the tomato')
+                    except Exception:
+                        
                     
                 if self.success1 and not self.success2 and o['visible'] and o['openable'] and o['objectType'] == self.target2:
                     
@@ -89,7 +89,7 @@ class Episode:
                         self._env.put_in_receptacle(self.target1, o['objectId'])
                         reward += GOAL_SUCCESS_REWARD
                         self.success2 = True
-                    catch Exception:
+                    except Exception:
                         print('Something went wrong with opening microwave, putting tomato in, or closing the microwave')
                         
             
