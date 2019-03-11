@@ -138,11 +138,11 @@ class Environment:
         except Exception:
             print('open err')
             raise Exception()
-        try:
+        '''try:
             event = self.controller.step(dict(action='MoveRight'), raise_for_failure=True)
         except Exception:
             print('Movri error')
-            raise Exception()
+            raise Exception()'''
         try:
             event = self.controller.step(dict(
                             action='PutObject',

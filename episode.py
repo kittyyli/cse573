@@ -90,7 +90,7 @@ class Episode:
                         reward += GOAL_SUCCESS_REWARD
                         self.success2 = True
                     except Exception:
-                        print('Something went wrong with opening microwave, putting tomato in, or closing the microwave')
+                        print('some microwave err')
                         
             
             done = self.success1 and self.success2
