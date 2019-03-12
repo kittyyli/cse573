@@ -59,6 +59,7 @@ class Episode:
             self.action_step(action)
             time.sleep(delay)
     
+    
     def judge(self, action):
         """ Judge the last event. """
         # immediate reward
@@ -69,17 +70,40 @@ class Episode:
         if action['action'] == 'Done':
             #done = True
             objects = self._env.last_event.metadata['objects']
-            visible_objects = [o['objectType'] for o in objects if o['visible']]
-            if not self.success1 and self.target1 in visible_objects:
-                reward += GOAL_SUCCESS_REWARD
-                self.success1 = True
-            if not self.success2 and self.target2 in visible_objects:
-                reward += GOAL_SUCCESS_REWARD
-                self.success2 = True
+            
+            for o in objects:
+                if not self.success1 and o['visible'] and o['pickupable'] and o['objectType'] == self.target1:
+                    
+                    reward += 1
+                    
+                    try: 
+                        self._env.pickup_object(o['objectId']) 
+                        self.target1 = o['objectId']
+
+                        reward += GOAL_SUCCESS_REWARD
+                        self.success1 = True
+                        
+                    except Exception:
+                        print('Pickup err')
+                    
+                if self.success1 and not self.success2 and o['visible'] and o['openable'] and o['objectType'] == self.target2:
+                    
+                    reward += 1
+                    
+                    try:
+                        self._env.put_in_receptacle(self.target1, o['objectId'])
+                        reward += GOAL_SUCCESS_REWARD
+                        self.success2 = True
+                    except Exception:
+                        print('some microwave err')
+                        
             
             done = self.success1 and self.success2
+            if done:
+                reward += GOAL_SUCCESS_REWARD
 
         return reward, done, action_was_successful
+
 
     def new_episode(self, args, scene):
         
