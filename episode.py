@@ -125,7 +125,7 @@ class Episode:
 
         # For now, single target.
         self.target1 = 'Tomato'
-        self.target2 = 'Bowl'
+        self.target2 = 'Microwave'
         self.success1 = False
         self.success2 = False
         self.cur_scene = scene
