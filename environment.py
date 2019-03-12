@@ -145,9 +145,8 @@ class Environment:
             raise Exception()'''
         try:
             event = self.controller.step(dict(
-                            action='PutObject',
-                            receptacleObjectId=t2_id,
-                            objectId=t1_id), raise_for_failure=True)
+                            action='PlaceHeldObject',
+                            receptacleObjectId=t2_id), raise_for_failure=True)
         except Exception:
             print('Put err')
             raise Exception()
