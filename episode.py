@@ -74,7 +74,7 @@ class Episode:
             for o in objects:
                 if not self.success1 and o['visible'] and o['pickupable'] and o['objectType'] == self.target1:
                     
-                    reward += 1
+                   #reward += 1
                     
                     try: 
                         self._env.pickup_object(o['objectId']) 
@@ -84,18 +84,18 @@ class Episode:
                         self.success1 = True
                         
                     except Exception:
-                        print('Pickup err')
+                        pass
                     
                 if self.success1 and not self.success2 and o['visible'] and o['openable'] and o['objectType'] == self.target2:
                     
-                    reward += 1
+                    #reward += 1
                     
                     try:
                         self._env.put_in_receptacle(self.target1, o['objectId'])
                         reward += GOAL_SUCCESS_REWARD
                         self.success2 = True
                     except Exception:
-                        print('some microwave err')
+                        pass
                         
             
             done = self.success1 and self.success2

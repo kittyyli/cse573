@@ -135,32 +135,15 @@ class Environment:
         
         
     def put_in_receptacle(self, t1_id, t2_id):
-        try:
-            event = self.controller.step(dict(action='OpenObject', objectId=t2_id), raise_for_failure=True)
-        except Exception:
-            print('    Open err')
-            raise Exception()
-        '''try:
-            event = self.controller.step(dict(action='MoveRight'), raise_for_failure=True)
-        except Exception:
-            print('Movri error')
-            raise Exception()'''
-        try:
-            event = self.controller.step(dict(
+        event = self.controller.step(dict(action='OpenObject', objectId=t2_id), raise_for_failure=True)
+        event = self.controller.step(dict(
                             action='PlaceHeldObject',
                             objectId=t2_id), raise_for_failure=True)
-        except Exception:
-            print('    Put err')
-            raise Exception()
 
         # close the microwave
-        try:
-            event = self.controller.step(dict(
+        event = self.controller.step(dict(
                         action='CloseObject',
                         objectId=t2_id), raise_for_failure=True)
-        except Exception:
-            print('    Close err')
-            raise Exception()
     
     
     def random_reachable_state(self):
